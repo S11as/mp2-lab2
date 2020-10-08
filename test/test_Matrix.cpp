@@ -2,7 +2,7 @@
 
 #include <gtest.h>
 
-TEST(TBitField, can_create_bitfield_with_positive_length)
+TEST(TestSuite, can_build_and_run_sample_test)
 {
     EXPECT_EQ(true, true);
 }
