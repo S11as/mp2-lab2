@@ -9,6 +9,6 @@ script:
   - cmake ../mp2-lab2
   - make -j
   - cd ./test
-  - ./test_matrixlib
+  - ./test_boilerplatelib
 notifications:
   email: false
