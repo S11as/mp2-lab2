@@ -1,10 +1,17 @@
 #include <iostream>
-#include "MyVector.h"
+#include "TMatrix.h"
 
 int main()
 {
-    Vector<int> a(3, 3);
+    TMatrix<int> mtr(2);
+    mtr(1,1) = 5;
 
-    std::cout<< a << "\nHi\n";
+
+    TMatrix<int> mtr2(2);
+    mtr2 = mtr;
+
+
+    std::cout<<mtr2<<std::endl;
+
     return 0;
 }

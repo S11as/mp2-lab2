@@ -8,7 +8,7 @@ using namespace std;
 template <class T>
 class Vector
 {
-protected:
+public:
     int length;
     T* x;
 public:
@@ -17,14 +17,14 @@ public:
     Vector(T _v);
     Vector(int rowsCount, T* _v);
     Vector(int rowsCount, T _v);
-    Vector(Vector<T>& _v);
-    ~Vector();
+    Vector(const Vector<T>& _v);
+    virtual ~Vector();
 
-    Vector<T> operator +(Vector<T>& _v);
+    Vector<T> operator +(const Vector<T>& _v);
     Vector<T> operator -(Vector<T>& _v);
     Vector<T> operator *(Vector<T>& _v);
     Vector<T> operator /(Vector<T>& _v);
-    Vector<T>& operator =(Vector<T>& _v);
+    Vector<T>& operator =(const Vector<T>& _v);
     T& operator[] (const int index);
 
     Vector<T>& operator ++();
@@ -43,7 +43,7 @@ public:
 template <class T1>
 ostream& operator<< (ostream& ostr, const Vector<T1> &A) {
     for (int i = 0; i < A.length; i++) {
-        ostr << A.x[i] << endl;
+        ostr << A.x[i] << " ";
     }
     return ostr;
 }
@@ -92,7 +92,7 @@ Vector<T>::Vector(int rowsCount, T _v)
         x[i] = _v;
 }
 template <class T>
-Vector<T>::Vector(Vector<T>& _v)
+Vector<T>::Vector(const Vector<T>& _v)
 {
     length = _v.length;
     x = new T [length];
@@ -108,7 +108,7 @@ Vector<T>::~Vector()
     x = 0;
 }
 template <class T>
-Vector<T> Vector<T>::operator +(Vector<T>& _v)
+Vector<T> Vector<T>::operator +(const Vector<T>& _v)
 {
     Vector<T> res;
     res.length = MIN(length, _v.length);
@@ -157,7 +157,7 @@ Vector<T> Vector<T>::operator /(Vector<T>& _v)
     return res;
 }
 template <class T>
-Vector<T>& Vector<T>::operator =(Vector<T>& _v)
+Vector<T>& Vector<T>::operator =(const Vector<T>& _v)
 {
     if (this == &_v)
         return *this;
