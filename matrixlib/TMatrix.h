@@ -11,7 +11,9 @@ template<class T>
 class TMatrix : public Vector<Vector<T>> {
 public:
     TMatrix(int size = 0);
+
     TMatrix(const TMatrix<T> &matrix);
+
     TMatrix(const Vector<Vector<T>> &vector);
 
     ~TMatrix();
@@ -22,7 +24,9 @@ public:
     // 1 1 0    ->   0 1 1
     // 1 0 0    ->   0 0 1
     T &operator()(int row, int col) const;
+
     TMatrix<T> &operator=(const TMatrix<T> &matrix);
+
     TMatrix<T> operator+(const TMatrix<T> &matrix);
 
     template<class T1>
