@@ -36,6 +36,9 @@ public:
     Vector<T>& operator +=(Vector<T>& _v);
     Vector<T>& operator -=(Vector<T>& _v);
 
+    bool operator ==(const Vector<T>& _v) const;
+    bool operator !=(const Vector<T>& _v) const;
+
     template <class T1>
     friend ostream& operator<< (ostream& ostr, const Vector<T1> &A);
     template <class T1>
@@ -230,6 +233,21 @@ int Vector<T>::Length()
 }
 
 template<class T>
+bool Vector<T>::operator==(const Vector<T> &_v) const {
+    if(this->length != _v.length)
+        return false;
+    for (int i = 0; i < this->length; i++)
+        if (this->x[i] != _v.x[i])
+            return false;
+    return true;
+}
+
+template<class T>
+bool Vector<T>::operator!=(const Vector<T> &_v) const {
+    return !(*this == _v);
+}
+
+template<class T>
 void Vector<T>::push_back(const T &elem) {
     if(this->length >= this->capacity)
         this->reserve(this->capacity + 1);
@@ -252,6 +270,8 @@ void Vector<T>::reserve(unsigned int capacity) {
         delete[] this->x;
     this->x = buffer;
 }
+
+
 
 
 #endif

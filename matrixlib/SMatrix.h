@@ -28,6 +28,8 @@ public:
     T &operator()(int row, int col) const;
     SMatrix<T> &operator=(const SMatrix<T> &matrix);
     SMatrix<T> operator+(const SMatrix<T> &matrix);
+    bool operator==(const SMatrix<T> &matrix) const;
+    bool operator!=(const SMatrix<T> &matrix) const;
 
     template<class T1>
     friend istream &operator>>(istream &istr, const SMatrix &matrix);
@@ -98,8 +100,10 @@ SMatrix<T> &SMatrix<T>::operator=(const SMatrix<T> &matrix) {
 
 template<class T>
 T &SMatrix<T>::operator()(int row, int col) const {
-    if(row<0 || row >= this->length)
+    if(row<0 || row>=this->length)
         throw out_of_range("row out of range");
+    if(col<0 || col>=this->length)
+        throw out_of_range("col out of range");
 
     // проверяем, лежит ли запрашиваемый элемент выше заданных диагоналей
     int upper_shift = (this->length-1)-row-this->upper_bandwidth;
@@ -121,6 +125,21 @@ T &SMatrix<T>::operator()(int row, int col) const {
 template<class T>
 SMatrix<T> SMatrix<T>::operator+(const SMatrix<T> &matrix) {
     return Vector<Vector<T>>::operator+(matrix);
+}
+
+template<class T>
+bool SMatrix<T>::operator==(const SMatrix<T> &matrix) const {
+    if (this->length != matrix.length)
+        return false;
+    for (int i = 0; i < this->length; i++)
+        if (this->x[i] != matrix.x[i])
+            return false;
+    return true;
+}
+
+template<class T>
+bool SMatrix<T>::operator!=(const SMatrix<T> &matrix) const {
+    return !(*this == matrix);
 }
 
 

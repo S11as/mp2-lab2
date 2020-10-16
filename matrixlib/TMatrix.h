@@ -29,6 +29,9 @@ public:
 
     TMatrix<T> operator+(const TMatrix<T> &matrix);
 
+    bool operator==(const TMatrix<T> &matrix) const;
+    bool operator!=(const TMatrix<T> &matrix) const;
+
     template<class T1>
     friend istream &operator>>(istream &istr, const TMatrix &matrix);
 
@@ -57,7 +60,11 @@ TMatrix<T> &TMatrix<T>::operator=(const TMatrix<T> &matrix) {
     if (this != &matrix) {
         if (this->length != matrix.length) {
             delete[] this->x;
-            TMatrix<T>(matrix.length);
+            this->length = matrix.length;
+            this->x = new Vector<T>[matrix.length];
+            for (int i = 0; i < matrix.length; ++i) {
+                this->x[i] = matrix.x[i];
+            }
         }
         for (int i = 0; i < this->length; ++i) {
             this->x[i] = matrix.x[i];
@@ -68,6 +75,10 @@ TMatrix<T> &TMatrix<T>::operator=(const TMatrix<T> &matrix) {
 
 template<class T>
 T &TMatrix<T>::operator()(int row, int col) const {
+    if(row<0 || row>=this->length)
+        throw out_of_range("row out of range");
+    if(col<0 || col>=this->length)
+        throw out_of_range("col out of range");
     return this->x[row][col - row];
 }
 
@@ -91,6 +102,21 @@ ostream &operator<<(ostream &ostr, const TMatrix<T1> &matrix) {
         ostr << "\n";
     }
     return ostr;
+}
+
+template<class T>
+bool TMatrix<T>::operator==(const TMatrix<T> &matrix) const {
+    if (this->length != matrix.length)
+        return false;
+    for (int i = 0; i < this->length; i++)
+        if (this->x[i] != matrix.x[i])
+            return false;
+    return true;
+}
+
+template<class T>
+bool TMatrix<T>::operator!=(const TMatrix<T> &matrix) const {
+    return !(*this == matrix);
 }
 
 

@@ -9,7 +9,6 @@ int main()
 
     SMatrix<int> mtr2(mtr);
 
-
     std::cout<<mtr2<<std::endl;
 
     return 0;
