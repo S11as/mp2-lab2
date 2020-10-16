@@ -232,7 +232,7 @@ int Vector<T>::Length()
 template<class T>
 void Vector<T>::push_back(const T &elem) {
     if(this->length >= this->capacity)
-        this->reserve(this->capacity + 5);
+        this->reserve(this->capacity + 1);
     this->x[this->length] = elem;
     this->length++;
 }

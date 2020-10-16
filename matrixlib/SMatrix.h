@@ -98,10 +98,23 @@ SMatrix<T> &SMatrix<T>::operator=(const SMatrix<T> &matrix) {
 
 template<class T>
 T &SMatrix<T>::operator()(int row, int col) const {
-    int shift = row - this->lower_bandwidth;
-    if(shift > 0){
-        col -= shift;
-    }
+    if(row<0 || row >= this->length)
+        throw out_of_range("row out of range");
+
+    // проверяем, лежит ли запрашиваемый элемент выше заданных диагоналей
+    int upper_shift = (this->length-1)-row-this->upper_bandwidth;
+    if(col+upper_shift >= this->length)
+        throw out_of_range("col out of range");
+
+    // вычисляем, если это необходимо, сдвиг хранения
+    int lower_shift = row - this->lower_bandwidth;
+    if(lower_shift > 0)
+        col -= lower_shift;
+
+    //запрашиваемый элемент ниже заданных диагоналей
+    if(col < 0)
+        throw out_of_range("col out of range");
+
     return this->x[row][col];
 }
 
