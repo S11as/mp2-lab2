@@ -1,10 +1,15 @@
 #include <iostream>
-#include "MyVector.h"
+#include "TMatrix.h"
+#include "SMatrix.h"
 
 int main()
 {
-    Vector<int> a(3, 3);
+    SMatrix<int> mtr(4, 1, 2);
+    mtr(3, 3) = 55;
 
-    std::cout<< a << "\nHi\n";
+    SMatrix<int> mtr2(mtr);
+
+    std::cout<<mtr2<<std::endl;
+
     return 0;
 }
